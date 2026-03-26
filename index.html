@@ -4,7 +4,100 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Google AI Professional Certificate Dashboard</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries">document.addEventListener('DOMContentLoaded', () => {
+    const courseCards = document.querySelectorAll('section.space-y-6 > div.group');
+    const progressBar = document.querySelector('.w-64.h-4 div');
+    const progressText = document.querySelector('.font-bold.text-base.text-primary');
+    const completedStatText = document.querySelector('section.grid-cols-2 > div:last-child span.text-primary');
+    const resetBtn = document.getElementById('reset-progress-btn');
+    const totalCourses = 7;
+
+    function updateProgress() {
+        const completedCount = document.querySelectorAll('.course-completed').length;
+        const percentage = Math.round((completedCount / totalCourses) * 100);
+        
+        // Update Progress Bar
+        progressBar.style.width = `${percentage}%`;
+        progressText.innerText = `${percentage}% Complete`;
+        
+        // Update Stat Card
+        completedStatText.innerText = `${completedCount}/${totalCourses}`;
+
+        // Handle Capstone Locking logic
+        const capstone = document.querySelector('.border-dashed');
+        if (completedCount >= 6) {
+            capstone.classList.remove('opacity-90');
+            capstone.querySelector('.opacity-50')?.classList.remove('opacity-50');
+        } else {
+            capstone.classList.add('opacity-90');
+            const capstoneHeading = capstone.querySelector('h3');
+            const capstoneToggle = capstone.querySelector('.flex.items-center.gap-3');
+            if (capstoneHeading) capstoneHeading.classList.add('opacity-50');
+            if (capstoneToggle) capstoneToggle.classList.add('opacity-50');
+        }
+    }
+
+    function resetCardUI(card) {
+        card.classList.remove('course-completed', 'bg-primary/5', 'border-l-primary');
+        card.classList.add('glass-card-elevated');
+        
+        const toggleBtn = card.querySelector('.group\\/toggle');
+        if (!toggleBtn) return;
+        
+        const toggleBg = toggleBtn.querySelector('.bg-primary, .bg-surface-container');
+        const toggleOrb = toggleBtn.querySelector('.orb-3d');
+        const toggleIcon = toggleBtn.querySelector('.material-symbols-outlined');
+        const toggleText = toggleBtn.querySelector('span.text-primary');
+
+        if (toggleBg) {
+            toggleBg.classList.remove('bg-primary');
+            toggleBg.classList.add('bg-surface-container');
+        }
+        if (toggleOrb) toggleOrb.classList.remove('translate-x-6');
+        if (toggleIcon) {
+            toggleIcon.innerText = 'radio_button_unchecked';
+            toggleIcon.classList.remove('text-primary');
+            toggleIcon.classList.add('text-primary/40');
+        }
+        if (toggleText) toggleText.innerText = 'Mark Complete';
+    }
+
+    courseCards.forEach((card, index) => {
+        const toggleBtn = card.querySelector('.group\\/toggle');
+        if (!toggleBtn) return;
+
+        toggleBtn.addEventListener('click', () => {
+            const isCompleted = card.classList.toggle('course-completed');
+            const toggleBg = toggleBtn.querySelector('.bg-surface-container, .bg-primary');
+            const toggleOrb = toggleBtn.querySelector('.orb-3d');
+            const toggleIcon = toggleBtn.querySelector('.material-symbols-outlined');
+            const toggleText = toggleBtn.querySelector('span.text-primary');
+
+            if (isCompleted) {
+                card.classList.add('bg-primary/5', 'border-l-primary');
+                card.classList.remove('glass-card-elevated');
+                toggleBg.classList.replace('bg-surface-container', 'bg-primary');
+                toggleOrb.classList.add('translate-x-6');
+                toggleIcon.innerText = 'check';
+                toggleIcon.classList.replace('text-primary/40', 'text-primary');
+                toggleText.innerText = 'Completed';
+            } else {
+                resetCardUI(card);
+            }
+            
+            updateProgress();
+        });
+    });
+
+    if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+            courseCards.forEach(card => {
+                resetCardUI(card);
+            });
+            updateProgress();
+        });
+    }
+});</script>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
@@ -400,7 +493,7 @@
 </p>
 <p class="text-on-surface-variant font-medium text-base">You got this.</p>
 </div>
-<button class="text-stone-400 text-[10px] font-black hover:text-primary transition-colors border-b border-transparent hover:border-primary/30 pb-0.5 tracking-[0.2em] uppercase">
+<button class="text-stone-400 text-[10px] font-black hover:text-primary transition-colors border-b border-transparent hover:border-primary/30 pb-0.5 tracking-[0.2em] uppercase" id="reset-progress-btn">
                     reset progress
                 </button>
 </div>
@@ -424,4 +517,97 @@
 <span class="material-symbols-outlined" data-icon="person">person</span>
 </div>
 </nav>
-</body></html>
+<script>document.addEventListener('DOMContentLoaded', () => {
+    const courseCards = document.querySelectorAll('section.space-y-6 > div.group');
+    const progressBar = document.querySelector('.w-64.h-4 div');
+    const progressText = document.querySelector('.font-bold.text-base.text-primary');
+    const completedStatText = document.querySelector('section.grid-cols-2 > div:last-child span.text-primary');
+    const resetBtn = document.getElementById('reset-progress-btn');
+    const totalCourses = 7;
+
+    function updateProgress() {
+        const completedCount = document.querySelectorAll('.course-completed').length;
+        const percentage = Math.round((completedCount / totalCourses) * 100);
+        
+        // Update Progress Bar
+        progressBar.style.width = `${percentage}%`;
+        progressText.innerText = `${percentage}% Complete`;
+        
+        // Update Stat Card
+        completedStatText.innerText = `${completedCount}/${totalCourses}`;
+
+        // Handle Capstone Locking logic
+        const capstone = document.querySelector('.border-dashed');
+        if (completedCount >= 6) {
+            capstone.classList.remove('opacity-90');
+            capstone.querySelector('.opacity-50')?.classList.remove('opacity-50');
+        } else {
+            capstone.classList.add('opacity-90');
+            const capstoneHeading = capstone.querySelector('h3');
+            const capstoneToggle = capstone.querySelector('.flex.items-center.gap-3');
+            if (capstoneHeading) capstoneHeading.classList.add('opacity-50');
+            if (capstoneToggle) capstoneToggle.classList.add('opacity-50');
+        }
+    }
+
+    function resetCardUI(card) {
+        card.classList.remove('course-completed', 'bg-primary/5', 'border-l-primary');
+        card.classList.add('glass-card-elevated');
+        
+        const toggleBtn = card.querySelector('.group\\/toggle');
+        if (!toggleBtn) return;
+        
+        const toggleBg = toggleBtn.querySelector('.bg-primary, .bg-surface-container');
+        const toggleOrb = toggleBtn.querySelector('.orb-3d');
+        const toggleIcon = toggleBtn.querySelector('.material-symbols-outlined');
+        const toggleText = toggleBtn.querySelector('span.text-primary');
+
+        if (toggleBg) {
+            toggleBg.classList.remove('bg-primary');
+            toggleBg.classList.add('bg-surface-container');
+        }
+        if (toggleOrb) toggleOrb.classList.remove('translate-x-6');
+        if (toggleIcon) {
+            toggleIcon.innerText = 'radio_button_unchecked';
+            toggleIcon.classList.remove('text-primary');
+            toggleIcon.classList.add('text-primary/40');
+        }
+        if (toggleText) toggleText.innerText = 'Mark Complete';
+    }
+
+    courseCards.forEach((card, index) => {
+        const toggleBtn = card.querySelector('.group\\/toggle');
+        if (!toggleBtn) return;
+
+        toggleBtn.addEventListener('click', () => {
+            const isCompleted = card.classList.toggle('course-completed');
+            const toggleBg = toggleBtn.querySelector('.bg-surface-container, .bg-primary');
+            const toggleOrb = toggleBtn.querySelector('.orb-3d');
+            const toggleIcon = toggleBtn.querySelector('.material-symbols-outlined');
+            const toggleText = toggleBtn.querySelector('span.text-primary');
+
+            if (isCompleted) {
+                card.classList.add('bg-primary/5', 'border-l-primary');
+                card.classList.remove('glass-card-elevated');
+                toggleBg.classList.replace('bg-surface-container', 'bg-primary');
+                toggleOrb.classList.add('translate-x-6');
+                toggleIcon.innerText = 'check';
+                toggleIcon.classList.replace('text-primary/40', 'text-primary');
+                toggleText.innerText = 'Completed';
+            } else {
+                resetCardUI(card);
+            }
+            
+            updateProgress();
+        });
+    });
+
+    if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+            courseCards.forEach(card => {
+                resetCardUI(card);
+            });
+            updateProgress();
+        });
+    }
+});</script></body></html>
