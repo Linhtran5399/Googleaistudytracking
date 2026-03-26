@@ -51,9 +51,13 @@
     min-height: 100vh;
   }
 
-  .nav {
+  .top-band {
     background: var(--nav-bg);
     border-bottom: 0.5px solid var(--border);
+  }
+  .top-band-inner {
+    max-width: 860px;
+    margin: 0 auto;
     padding: 0 28px;
     display: flex;
     align-items: center;
@@ -63,9 +67,13 @@
   .nav-brand { font-size: 13px; font-weight: 600; color: var(--teal); }
   .nav-tab { font-size: 13px; font-weight: 500; color: var(--teal); border-bottom: 2px solid var(--teal); padding-bottom: 2px; }
 
-  .hero {
+  .hero-band {
     background: var(--card-bg);
     border-bottom: 0.5px solid var(--border);
+  }
+  .hero {
+    max-width: 860px;
+    margin: 0 auto;
     padding: 28px 28px 24px;
     display: flex;
     align-items: flex-start;
@@ -81,9 +89,13 @@
   }
   .hero-btn:hover { opacity: 0.88; }
 
+  .stats-band {
+    background: var(--card-bg);
+    border-bottom: 0.5px solid var(--border);
+  }
   .stats-row {
     display: grid; grid-template-columns: repeat(4, 1fr);
-    background: var(--card-bg); border-bottom: 0.5px solid var(--border);
+    max-width: 860px; margin: 0 auto; padding: 0 28px;
   }
   .stat-card {
     padding: 18px 20px; border-right: 0.5px solid var(--border);
@@ -216,32 +228,33 @@
   .congrats-sub { font-size: 12px; color: var(--text2); }
 
   @media (max-width: 540px) {
-    .hero { flex-direction: column; }
-    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .hero { flex-direction: column; padding: 20px 16px; }
+    .stats-row { grid-template-columns: repeat(2, 1fr); padding: 0 16px; }
     .stat-card:nth-child(2) { border-right: none; }
     .bottom-grid { grid-template-columns: 1fr; }
     .main { padding: 16px; }
-    .hero { padding: 20px 16px; }
-    .nav { padding: 0 16px; }
+    .top-band-inner { padding: 0 16px; }
   }
 </style>
 </head>
 <body>
 
-<div class="nav">
-  <div class="nav-brand">Google AI Professional</div>
-  <div class="nav-tab">Dashboard</div>
+<div class="top-band">
+  <div class="top-band-inner">
+    <div class="nav-brand">Google AI Professional</div>
+    <div class="nav-tab">Dashboard</div>
+  </div>
 </div>
 
-<div class="hero">
+<div class="hero-band"><div class="hero">
   <div>
     <div class="hero-title">Google AI Professional Certificate</div>
     <div class="hero-sub">Master the fundamentals of generative AI and learn how to apply it across your workflow to boost productivity and innovation.</div>
   </div>
   <button class="hero-btn" onclick="document.getElementById('course-list').scrollIntoView({behavior:'smooth'})">Continue Learning</button>
-</div>
+</div></div>
 
-<div class="stats-row">
+<div class="stats-band"><div class="stats-row">
   <div class="stat-card">
     <div class="stat-icon">
       <svg viewBox="0 0 16 16" fill="none" stroke="var(--teal)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="12" height="10" rx="1.5"/><path d="M5 7h6M5 9.5h4"/></svg>
@@ -270,7 +283,7 @@
     <div class="stat-num" id="stat-done">0/7</div>
     <div class="stat-lbl">Completed</div>
   </div>
-</div>
+</div></div>
 
 <div class="main">
   <div class="congrats" id="congrats">
