@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Google AI Professional Certificate</title>
+<style>
+  :root {
+    --bg: #f4f6f4;
+    --bg2: #eef1ee;
+    --bg3: #ffffff;
+    --text: #1a2e1a;
+    --text2: #4a5e4a;
+    --text3: #7a917a;
+    --border: rgba(26,46,26,0.1);
+    --border2: rgba(26,46,26,0.18);
+    --teal: #1a7a5e;
+    --teal-bg: #1a5e46;
+    --teal-light: #e6f4ef;
+    --teal-mid: #15694f;
+    --teal-bright: #4db896;
+    --teal-pale: #d0ece3;
+    --nav-bg: #ffffff;
+    --card-bg: #ffffff;
+    --locked-bg: #f9faf9;
+    --locked-text: #aabcaa;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #111a11;
+      --bg2: #182018;
+      --bg3: #1e281e;
+      --text: #d8ead8;
+      --text2: #8aab8a;
+      --text3: #5a785a;
+      --border: rgba(180,220,180,0.1);
+      --border2: rgba(180,220,180,0.18);
+      --teal-light: #0d2e1e;
+      --teal-pale: #0a2218;
+      --nav-bg: #1e281e;
+      --card-bg: #1e281e;
+      --locked-bg: #181e18;
+      --locked-text: #3a5a3a;
+    }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  .nav {
+    background: var(--nav-bg);
+    border-bottom: 0.5px solid var(--border);
+    padding: 0 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 48px;
+  }
+  .nav-brand { font-size: 13px; font-weight: 600; color: var(--teal); }
+  .nav-tab { font-size: 13px; font-weight: 500; color: var(--teal); border-bottom: 2px solid var(--teal); padding-bottom: 2px; }
+
+  .hero {
+    background: var(--card-bg);
+    border-bottom: 0.5px solid var(--border);
+    padding: 28px 28px 24px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  .hero-title { font-size: 28px; font-weight: 700; color: var(--text); letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 8px; }
+  .hero-sub { font-size: 13px; color: var(--text2); line-height: 1.5; max-width: 380px; }
+  .hero-btn {
+    background: var(--teal-bg); color: #fff; font-size: 13px; font-weight: 600;
+    padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer;
+    white-space: nowrap; flex-shrink: 0; transition: opacity 0.15s;
+  }
+  .hero-btn:hover { opacity: 0.88; }
+
+  .stats-row {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    background: var(--card-bg); border-bottom: 0.5px solid var(--border);
+  }
+  .stat-card {
+    padding: 18px 20px; border-right: 0.5px solid var(--border);
+    display: flex; flex-direction: column; align-items: flex-start; gap: 6px;
+  }
+  .stat-card:last-child { border-right: none; }
+  .stat-icon {
+    width: 28px; height: 28px; background: var(--teal-light); border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .stat-icon svg { width: 14px; height: 14px; }
+  .stat-num { font-size: 22px; font-weight: 700; color: var(--text); letter-spacing: -0.02em; line-height: 1; }
+  .stat-lbl { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text3); }
+
+  .main { padding: 24px 28px; max-width: 860px; margin: 0 auto; }
+
+  .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .section-title { font-size: 16px; font-weight: 700; color: var(--text); letter-spacing: -0.01em; }
+  .pct-label { font-size: 12px; font-weight: 600; color: var(--teal); }
+
+  .prog-wrap { margin-bottom: 16px; }
+  .prog-track { height: 5px; background: var(--bg2); border-radius: 3px; overflow: hidden; }
+  .prog-fill { height: 100%; background: var(--teal); border-radius: 3px; width: 0%; transition: width 0.5s ease; }
+
+  .course-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 20px; }
+  .course-row {
+    background: var(--card-bg); border: 0.5px solid var(--border); border-radius: 10px;
+    padding: 14px 16px; display: flex; align-items: center; gap: 14px;
+    cursor: pointer; transition: background 0.12s, border-color 0.2s; user-select: none;
+  }
+  .course-row:hover { background: var(--bg2); }
+  .course-row.done { background: var(--teal-light); border-color: var(--teal-pale); }
+  .course-row.locked { background: var(--locked-bg); border-style: dashed; cursor: default; opacity: 0.72; }
+
+  .course-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--bg2); border: 0.5px solid var(--border2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; color: var(--text2); flex-shrink: 0; transition: all 0.2s;
+  }
+  .course-row.done .course-num { background: var(--teal); border-color: var(--teal); color: #fff; }
+  .course-row.locked .course-num { color: var(--locked-text); }
+  .checkmark-icon { display: none; font-size: 12px; }
+  .course-row.done .num-label { display: none; }
+  .course-row.done .checkmark-icon { display: block; }
+
+  .course-meta { flex: 1; min-width: 0; }
+  .course-tags { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
+  .tag {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
+    padding: 2px 7px; border-radius: 4px; border: 0.5px solid var(--border2);
+    color: var(--text3); background: var(--bg2);
+  }
+  .tag.core     { background: #e6f4ef; color: #15694f; border-color: #c0ddd2; }
+  .tag.prod     { background: #e8f0fe; color: #1a5fa8; border-color: #bcd4f8; }
+  .tag.data     { background: #fef3e2; color: #9a5e00; border-color: #f5d9a0; }
+  .tag.writing  { background: #fce8f3; color: #8a1a5e; border-color: #f0b8d8; }
+  .tag.creative { background: #f0eafe; color: #5a2aaa; border-color: #d8c8f8; }
+  .tag.dev      { background: #e6faf0; color: #0a6e3a; border-color: #b0e8cc; }
+  .tag.capstone { background: #fff0e6; color: #8a3a00; border-color: #f5c8a0; }
+  @media (prefers-color-scheme: dark) {
+    .tag.core     { background: #0d2e1e; color: #4db896; border-color: #1a4a34; }
+    .tag.prod     { background: #0d1e3a; color: #6ab0f0; border-color: #1a3060; }
+    .tag.data     { background: #2e1e08; color: #d4a044; border-color: #4a3010; }
+    .tag.writing  { background: #2e0e1e; color: #d48ab0; border-color: #4a1830; }
+    .tag.creative { background: #1e0e3e; color: #a888e8; border-color: #30185a; }
+    .tag.dev      { background: #082a18; color: #3acc80; border-color: #104020; }
+    .tag.capstone { background: #2e1208; color: #e89060; border-color: #4a2010; }
+  }
+  .time-tag { display: flex; align-items: center; gap: 4px; font-size: 11px; color: var(--text3); }
+  .time-tag svg { width: 11px; height: 11px; flex-shrink: 0; }
+
+  .course-name { font-size: 14px; font-weight: 600; color: var(--text); line-height: 1.3; }
+  .course-row.done .course-name { color: var(--teal-mid); }
+  .course-row.locked .course-name { color: var(--locked-text); }
+  @media (prefers-color-scheme: dark) { .course-row.done .course-name { color: var(--teal-bright); } }
+
+  .course-action { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+  .mark-btn { font-size: 12px; font-weight: 500; color: var(--teal); background: none; border: none; cursor: pointer; padding: 0; white-space: nowrap; }
+  .mark-btn:hover { text-decoration: underline; }
+  .course-row.done .mark-btn { color: var(--text3); }
+  .toggle-circle {
+    width: 30px; height: 16px; border-radius: 8px;
+    background: var(--bg2); border: 0.5px solid var(--border2);
+    position: relative; transition: background 0.2s; flex-shrink: 0;
+  }
+  .toggle-dot {
+    width: 12px; height: 12px; border-radius: 50%; background: var(--text3);
+    position: absolute; top: 2px; left: 2px; transition: all 0.2s;
+  }
+  .course-row.done .toggle-circle { background: var(--teal); border-color: var(--teal); }
+  .course-row.done .toggle-dot { left: 16px; background: #fff; }
+
+  .lock-icon {
+    width: 28px; height: 28px; background: var(--bg2); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .lock-icon svg { width: 13px; height: 13px; color: var(--locked-text); }
+
+  .bottom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+  .cert-card {
+    background: var(--teal-bg); border-radius: 12px; padding: 22px 20px;
+    position: relative; overflow: hidden;
+  }
+  .cert-card-title { font-size: 16px; font-weight: 700; color: #fff; line-height: 1.3; margin-bottom: 8px; }
+  .cert-card-sub { font-size: 12px; color: rgba(255,255,255,0.72); line-height: 1.5; margin-bottom: 16px; }
+  .cert-card-btn {
+    background: #fff; color: var(--teal-bg); font-size: 12px; font-weight: 600;
+    padding: 8px 16px; border-radius: 6px; border: none; cursor: pointer; display: inline-block;
+  }
+  .cert-card-icon { position: absolute; right: 16px; bottom: 16px; opacity: 0.18; }
+  .cert-card-icon svg { width: 56px; height: 56px; }
+
+  .tip-card {
+    background: var(--card-bg); border: 0.5px solid var(--border); border-radius: 12px;
+    padding: 22px 20px; display: flex; flex-direction: column;
+    justify-content: center; align-items: center; text-align: center; gap: 10px;
+  }
+  .tip-icon { width: 36px; height: 36px; background: var(--teal-light); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+  .tip-icon svg { width: 18px; height: 18px; }
+  .tip-text { font-size: 13px; font-weight: 500; color: var(--text); line-height: 1.55; }
+  .tip-text strong { color: var(--teal); }
+  .tip-sub { font-size: 11px; color: var(--text3); }
+  .reset-link { font-size: 11px; color: var(--text3); cursor: pointer; background: none; border: none; text-decoration: underline; text-decoration-style: dotted; padding: 0; margin-top: 2px; }
+  .reset-link:hover { color: var(--text2); }
+
+  .congrats { display: none; background: var(--teal-light); border: 0.5px solid var(--teal-pale); border-radius: 12px; padding: 20px; text-align: center; margin-bottom: 12px; }
+  .congrats.show { display: block; }
+  .congrats-title { font-size: 15px; font-weight: 700; color: var(--teal-mid); margin-bottom: 4px; }
+  .congrats-sub { font-size: 12px; color: var(--text2); }
+
+  @media (max-width: 540px) {
+    .hero { flex-direction: column; }
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .stat-card:nth-child(2) { border-right: none; }
+    .bottom-grid { grid-template-columns: 1fr; }
+    .main { padding: 16px; }
+    .hero { padding: 20px 16px; }
+    .nav { padding: 0 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <div class="nav-brand">Google AI Professional</div>
+  <div class="nav-tab">Dashboard</div>
+</div>
+
+<div class="hero">
+  <div>
+    <div class="hero-title">Google AI Professional Certificate</div>
+    <div class="hero-sub">Master the fundamentals of generative AI and learn how to apply it across your workflow to boost productivity and innovation.</div>
+  </div>
+  <button class="hero-btn" onclick="document.getElementById('course-list').scrollIntoView({behavior:'smooth'})">Continue Learning</button>
+</div>
+
+<div class="stats-row">
+  <div class="stat-card">
+    <div class="stat-icon">
+      <svg viewBox="0 0 16 16" fill="none" stroke="var(--teal)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="12" height="10" rx="1.5"/><path d="M5 7h6M5 9.5h4"/></svg>
+    </div>
+    <div class="stat-num">7</div>
+    <div class="stat-lbl">Courses</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">
+      <svg viewBox="0 0 16 16" fill="none" stroke="var(--teal)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg>
+    </div>
+    <div class="stat-num">~8 hrs</div>
+    <div class="stat-lbl">Total Time</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">
+      <svg viewBox="0 0 16 16" fill="none" stroke="var(--teal)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="12" height="11" rx="1.5"/><path d="M2 6h12M5 2v2M11 2v2"/></svg>
+    </div>
+    <div class="stat-num" id="stat-weeks">7 wks</div>
+    <div class="stat-lbl">Duration</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">
+      <svg viewBox="0 0 16 16" fill="none" stroke="var(--teal)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M5.5 8.5l2 2 3-3"/></svg>
+    </div>
+    <div class="stat-num" id="stat-done">0/7</div>
+    <div class="stat-lbl">Completed</div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="congrats" id="congrats">
+    <div class="congrats-title">🎉 Google AI Professional Certificate — done!</div>
+    <div class="congrats-sub">Add it to LinkedIn + drop it in your portfolio. Phương Linh era, certified ✨</div>
+  </div>
+
+  <div class="section-header">
+    <div class="section-title">Curriculum Progress</div>
+    <div class="pct-label" id="pct-label">0% Complete</div>
+  </div>
+  <div class="prog-wrap">
+    <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
+  </div>
+
+  <div class="course-list" id="course-list"></div>
+
+  <div class="bottom-grid">
+    <div class="cert-card">
+      <div class="cert-card-title">Ready to showcase your skills?</div>
+      <div class="cert-card-sub">Complete all 7 courses to earn your professional badge and certificate from Google AI.</div>
+      <div class="cert-card-btn">View Certification Details</div>
+      <div class="cert-card-icon">
+        <svg viewBox="0 0 24 24" fill="white"><path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.35C17.25 22.15 21 17.25 21 12V7L12 2zm-1 13l-3-3 1.41-1.41L11 12.17l4.59-4.58L17 9l-6 6z"/></svg>
+      </div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">
+        <svg viewBox="0 0 16 16" fill="none" stroke="var(--teal)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v3M8 11v3M2 8h3M11 8h3M4.22 4.22l2.12 2.12M9.66 9.66l2.12 2.12M4.22 11.78l2.12-2.12M9.66 6.34l2.12-2.12"/></svg>
+      </div>
+      <div class="tip-text">1 course/week = certified by <strong>late May 2026</strong>.<br>Finish 2 in week 1 → <strong>early May</strong>.</div>
+      <div class="tip-sub">You got this.</div>
+      <button class="reset-link" onclick="resetAll()">Reset Progress</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const courses = [
+  { name: "AI Fundamentals", tag: "Core", tagClass: "core", hr: "Approx. 1 hour", capstone: false },
+  { name: "AI for Brainstorming & Planning", tag: "Productivity", tagClass: "prod", hr: "Approx. 1 hour", capstone: false },
+  { name: "AI for Data Analysis", tag: "Data", tagClass: "data", hr: "Approx. 1.5 hours", capstone: false },
+  { name: "AI for Research & Writing", tag: "Writing", tagClass: "writing", hr: "Approx. 1 hour", capstone: false },
+  { name: "AI for Communication & Presentations", tag: "Creative", tagClass: "creative", hr: "Approx. 1.5 hours", capstone: false },
+  { name: "AI for Vibe Coding", tag: "Development", tagClass: "dev", hr: "Approx. 1 hour", capstone: false },
+  { name: "Capstone: Build Your AI Tool", tag: "Final Capstone", tagClass: "capstone", hr: "Approx. 2 hours", capstone: true },
+];
+
+const KEY = "google_ai_cert_v2";
+let done = [];
+
+function load() { try { done = JSON.parse(localStorage.getItem(KEY) || "[]"); } catch(e) { done = []; } }
+function save() { try { localStorage.setItem(KEY, JSON.stringify(done)); } catch(e) {} }
+
+function toggle(i) {
+  if (courses[i].capstone && !courses.slice(0,6).every((_,j) => done.includes(j)) && !done.includes(i)) return;
+  done = done.includes(i) ? done.filter(x => x !== i) : [...done, i];
+  save(); render();
+}
+function resetAll() { done = []; save(); render(); }
+
+function render() {
+  const list = document.getElementById("course-list");
+  list.innerHTML = "";
+  courses.forEach((c, i) => {
+    const isDone = done.includes(i);
+    const isLocked = c.capstone && !courses.slice(0,6).every((_,j) => done.includes(j)) && !isDone;
+    const row = document.createElement("div");
+    row.className = "course-row" + (isDone ? " done" : "") + (isLocked ? " locked" : "");
+    if (!isLocked) row.onclick = () => toggle(i);
+    row.innerHTML = `
+      <div class="course-num">
+        <span class="num-label">${i + 1}</span>
+        <span class="checkmark-icon">✓</span>
+      </div>
+      <div class="course-meta">
+        <div class="course-tags">
+          <span class="tag ${c.tagClass}">${c.tag}</span>
+          <span class="time-tag">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="6" cy="6" r="4.5"/><path d="M6 3.5v2.5l1.5 1.5"/></svg>
+            ${c.hr}
+          </span>
+        </div>
+        <div class="course-name">${c.name}</div>
+      </div>
+      ${isLocked
+        ? `<div class="lock-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="10" height="7" rx="1.5"/><path d="M5 7V5a3 3 0 016 0v2"/></svg></div><span style="font-size:12px;color:var(--locked-text);font-weight:500;">Locked</span>`
+        : `<div class="course-action"><div class="toggle-circle"><div class="toggle-dot"></div></div><button class="mark-btn">${isDone ? "Completed" : "Mark Complete"}</button></div>`
+      }
+    `;
+    list.appendChild(row);
+  });
+
+  const pct = Math.round((done.length / courses.length) * 100);
+  document.getElementById("prog-fill").style.width = pct + "%";
+  document.getElementById("pct-label").textContent = pct + "% Complete";
+  document.getElementById("stat-done").textContent = done.length + "/7";
+  document.getElementById("stat-weeks").textContent = (courses.length - done.length) > 0 ? (courses.length - done.length) + " wks" : "Done!";
+  document.getElementById("congrats").classList.toggle("show", done.length === 7);
+}
+
+load(); render();
+</script>
+</body>
+</html>
